@@ -1,0 +1,73 @@
+Enter the no readers : 25
+
+Enter the no Writers : 20
+write ::1
+
+Reader Inside..1
+
+Reader Inside..1
+
+Reader Inside..1
+write ::2
+
+Reader Inside..2
+write ::3
+
+Reader Inside..3
+
+Reader Inside..3
+
+Reader Inside..3
+write ::4
+write ::5
+write ::6
+write ::7
+write ::8
+
+Reader Inside..8
+
+Reader Inside..8
+
+Reader Inside..8
+
+Reader Inside..8
+write ::9
+
+Reader Inside..9
+
+Reader Inside..9
+
+Reader Inside..9
+write ::10
+
+Reader Inside..10
+
+Reader Inside..10
+write ::11
+write ::12
+
+Reader Inside..12
+write ::13
+
+Reader Inside..13
+
+Reader Inside..13
+
+Reader Inside..13
+write ::14
+
+Reader Inside..14
+
+Reader Inside..14
+
+Reader Inside..14
+
+Reader Inside..14
+write ::15
+write ::16
+write ::17
+write ::18
+write ::19
+
+Reader Inside..19
+write ::20

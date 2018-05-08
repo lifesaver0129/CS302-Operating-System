@@ -1,0 +1,3 @@
+/Users/lifesaver/Documents/University/OS/lab7/code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/lifesaver/Documents/University/OS/lab7/code/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lifesaver/Documents/University/OS/lab7/code/cmake-build-debug/CMakeFiles/code.dir
