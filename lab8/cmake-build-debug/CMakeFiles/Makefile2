@@ -54,10 +54,10 @@ RM = "/Users/lifesaver/Library/Application Support/JetBrains/Toolbox/apps/CLion/
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lifesaver/Documents/University/OS/lab8
+CMAKE_SOURCE_DIR = /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lifesaver/Documents/University/OS/lab8/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/cmake-build-debug
 
 #=============================================================================
 # Target rules for target CMakeFiles/lab8.dir
@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /Users/lifesaver/Documents/University/OS/lab8/cmake-build-deb
 CMakeFiles/lab8.dir/all:
 	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/depend
 	$(MAKE) -f CMakeFiles/lab8.dir/build.make CMakeFiles/lab8.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lifesaver/Documents/University/OS/lab8/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target lab8"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target lab8"
 .PHONY : CMakeFiles/lab8.dir/all
 
 # Include target in all.
@@ -76,9 +76,9 @@ all: CMakeFiles/lab8.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/lab8.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/lab8/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/cmake-build-debug/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/lab8.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/lab8/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/lab8.dir/rule
 
 # Convenience name for target.

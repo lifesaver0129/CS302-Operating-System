@@ -7,8 +7,6 @@
 #include <cmath>
 #include <list>
 #include <fstream>
-#include <iomanip>
-
 
 #define DEFAULT_CACHE_SIZE 1024
 
@@ -96,14 +94,13 @@ int search(int key) {
 }
 
 int find_min_index(int page_list[], int index) {
-    int res = -1;
-    int next_one = index;
+    int res = -1, farthest = index;
     for (int i = 0; i < cache_vec.size(); i++) {
         int j;
         for (j = index; j < page_size; j++) {
             if (cache_vec[i] == page_list[j]) {
-                if (j > next_one && j >= 0) {
-                    next_one = j;
+                if (j > farthest) {
+                    farthest = j;
                     res = i;
                 }
                 break;
@@ -112,9 +109,7 @@ int find_min_index(int page_list[], int index) {
         if (j == page_size)
             return i;
     }
-    if (res == -1)
-        return 0;
-    return res;
+    return (res == -1) ? 0 : res;
 }
 
 
@@ -149,17 +144,17 @@ int find_clock_index(int *valid_bit, int hand) {
         } else {
             valid_bit[hand] = 0;
             hand += 1;
-            hand = hand % cache_size;
+            if (hand == cache_size)
+                hand = 0;
         }
     }
 }
 
 void clock_algo() {
     int hand = 0;
-    int pointer = 0;
     int temp_input = 0;
     int valid_bit[cache_size];
-    fill_n(valid_bit, cache_size, 0);
+    fill_n(valid_bit, cache_size, 1);
     for (int i = 0; i < page_size; i++) {
         total += 1;
         if (is_test) {
@@ -169,21 +164,18 @@ void clock_algo() {
         }
         iter = find(cache_list.begin(), cache_list.end(), temp_input);
         if (search(temp_input) != -1) {
-            pointer = search(temp_input);
-            valid_bit[pointer] = 1;
+            hand = search(temp_input);
+            valid_bit[hand] = 1;
             hit += 1;
         } else {
             if (cache_vec.size() != cache_size) {
-                valid_bit[hand] = 1;
                 cache_vec.push_back(temp_input);
-                hand += 1;
-                hand = hand % cache_size;
+                hand = cache_vec.size() - 1;
             } else {
+                hand = hand % cache_size;
                 int j = find_clock_index(valid_bit, hand);
                 cache_vec[j] = temp_input;
-                valid_bit[j] = 1;
-                hand = j + 1;
-                hand = hand % cache_size;
+                hand = j;
             }
         }
     }
@@ -219,7 +211,7 @@ void second_chance() {
                     temp_output = cache_list.front();
                     cache_list.pop_front();
                     cache_list_2.push_back(temp_output);
-                    if (cache_list_2.size() > cache_size - cache_size / 2)
+                    if (cache_list_2.size() > cache_size / 2)
                         cache_list_2.pop_front();
                 }
             }
@@ -228,13 +220,15 @@ void second_chance() {
 }
 
 void print_status() {
-    printf("Hit ratio = %.2f%%\n", double(hit) * 100 / double(total));
+    float ans = double(hit) / double(total);
+    ans *= 100;
+    printf("Hit ratio = %.2f%%\n", ans);
 }
 
 int main() {
 //    clock_t t1 = clock();
-    generate_input();
-//    testing_input(3, "1.in", 123);
+//    generate_input();
+    testing_input(3, "1.in", 512);
     switch (working_algorithm) {
         case 0:
             FIFO();

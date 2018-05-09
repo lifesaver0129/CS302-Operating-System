@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/lifesaver/Documents/University/OS/lab8/Algo_real.cpp" "/Users/lifesaver/Documents/University/OS/lab8/cmake-build-debug/CMakeFiles/lab8.dir/Algo_real.cpp.o"
+  "/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/Algo_real.cpp" "/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab8/cmake-build-debug/CMakeFiles/lab8.dir/Algo_real.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
