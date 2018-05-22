@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab9/lab9.cpp
+string
+-
+iostream
+-
+fstream
+-
+algorithm
+-
+
