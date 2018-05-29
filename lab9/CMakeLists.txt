@@ -4,4 +4,4 @@ project(lab9)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(lab9
-        lab9.cpp)
+        lab9_11510225.cpp)

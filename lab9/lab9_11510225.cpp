@@ -152,8 +152,14 @@ void SCAN(int *track_queue) {
     }
     if (list_start_point < track_length - 1) {
         cout << connect << 0;
-        range += abs(track_queue[0]);
-        for (int i = list_start_point; i < track_length - 1; i++) {
+        if (track_queue[list_start_point] <= start_point) {
+            range += abs(track_queue[0]);
+        } else {
+            cout << connect << track_queue[list_start_point];
+        }
+        range += abs(track_queue[list_start_point + 1] - 0);
+        cout << connect << track_queue[list_start_point + 1];
+        for (int i = list_start_point + 1; i < track_length - 1; i++) {
             range += abs(track_queue[i] - track_queue[i + 1]);
             cout << connect << track_queue[i + 1];
         }
@@ -189,6 +195,8 @@ void CSCAN(int *track_queue) {
                 cout << connect << track_queue[i - 1];
             }
         }
+        if (list_start_point < track_length - 1)
+            range += abs(track_queue[0]);
     } else {
         cout << start_point;
         range += start_point;

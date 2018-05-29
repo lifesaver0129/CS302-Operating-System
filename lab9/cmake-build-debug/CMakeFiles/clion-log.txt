@@ -1,11 +1,4 @@
 "/Users/lifesaver/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.4445.84/CLion.app/Contents/bin/cmake/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab9
--- The CXX compiler identification is AppleClang 9.1.0.9020039
--- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
--- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -- works
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab9/cmake-build-debug
