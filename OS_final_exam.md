@@ -1,6 +1,4 @@
-# CS302-Operating-System
-
-# Final Exam
+# OS Final Exam
 
 ## Part I: True or False (12 marks)
 

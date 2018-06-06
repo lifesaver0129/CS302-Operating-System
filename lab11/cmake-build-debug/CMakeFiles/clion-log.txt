@@ -1,0 +1,4 @@
+"/Users/lifesaver/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.4445.84/CLion.app/Contents/bin/cmake/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug
