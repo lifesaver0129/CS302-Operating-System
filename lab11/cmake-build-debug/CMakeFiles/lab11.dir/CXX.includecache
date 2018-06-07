@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/fs.cpp
+vector
+-
+string
+-
+iostream
+-
+sys/stat.h
+-
+zconf.h
+-
+sstream
+-
+

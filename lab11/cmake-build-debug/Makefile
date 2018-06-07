@@ -123,33 +123,6 @@ lab11/fast:
 	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/build
 .PHONY : lab11/fast
 
-file_system.o: file_system.cpp.o
-
-.PHONY : file_system.o
-
-# target to build an object file
-file_system.cpp.o:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/file_system.cpp.o
-.PHONY : file_system.cpp.o
-
-file_system.i: file_system.cpp.i
-
-.PHONY : file_system.i
-
-# target to preprocess a source file
-file_system.cpp.i:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/file_system.cpp.i
-.PHONY : file_system.cpp.i
-
-file_system.s: file_system.cpp.s
-
-.PHONY : file_system.s
-
-# target to generate assembly for a file
-file_system.cpp.s:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/file_system.cpp.s
-.PHONY : file_system.cpp.s
-
 fs.o: fs.cpp.o
 
 .PHONY : fs.o
@@ -186,9 +159,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... lab11"
-	@echo "... file_system.o"
-	@echo "... file_system.i"
-	@echo "... file_system.s"
 	@echo "... fs.o"
 	@echo "... fs.i"
 	@echo "... fs.s"

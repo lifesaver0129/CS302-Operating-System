@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /Users/lifesaver/Documents/University/OS/CS302-Operating-Syst
 CMakeFiles/lab11.dir/all:
 	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/depend
 	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target lab11"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target lab11"
 .PHONY : CMakeFiles/lab11.dir/all
 
 # Include target in all.
@@ -76,7 +76,7 @@ all: CMakeFiles/lab11.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/lab11.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/lab11.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lifesaver/Documents/University/OS/CS302-Operating-System/lab11/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/lab11.dir/rule
