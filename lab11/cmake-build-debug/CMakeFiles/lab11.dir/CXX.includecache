@@ -13,10 +13,6 @@ string
 -
 iostream
 -
-sys/stat.h
--
-zconf.h
--
 sstream
 -
 
