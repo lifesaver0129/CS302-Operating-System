@@ -1,0 +1,80 @@
+man
+pwd
+mkdir cs302
+ls
+mkdirp /cs302/ cs203
+lsp /cs302/
+cd cs302
+pwd
+cdp /
+pwd
+dedirp /cs302/ cs203
+lsp /cs302/
+dedir cs302
+ls
+create hello 7
+mkdir cs 
+createp /cs/ hello 7
+ls
+lsp /cs/
+search hello
+open hello
+openp /cs/ hello
+lsfile
+write hello world 0
+cat hello
+writep /cs/ hello world 0
+catp /cs/ hello
+reposition hello 0
+write hello ww 1
+cat hello
+truncate hello 2
+cat hello
+lsfile
+close hello
+lsfile
+ls 
+delete hello
+ls
+regusr DBG 123
+regusr GBD 321
+disusr
+login DBG
+123
+login root
+111
+dedir cs
+delusr DBG
+delusr GBD
+mkdir cs302
+mkdir cs302
+ls
+create txt 1
+write txt hello 0
+open txt
+lsfile
+write txt hello 0
+chmod txt 7
+write txt hello 0
+cat txt
+createp /cs302/ txt 3
+openp /cs302/ txt
+writep /cs302/ txt world 0
+catp /cs302/ txt
+chmodp /cs302/ txt 6
+catp /cs302/ txt
+search txt
+closep /cs302/ txt
+lsfile
+close txt
+dedir cs302
+ls
+mkdir 233
+cd 233
+regusr ww 222
+login ww 222
+cdp /
+disusr
+login root 111
+disusr
+exit

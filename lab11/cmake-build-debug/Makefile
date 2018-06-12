@@ -123,32 +123,32 @@ lab11/fast:
 	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/build
 .PHONY : lab11/fast
 
-fs.o: fs.cpp.o
+11510225.o: 11510225.cpp.o
 
-.PHONY : fs.o
+.PHONY : 11510225.o
 
 # target to build an object file
-fs.cpp.o:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/fs.cpp.o
-.PHONY : fs.cpp.o
+11510225.cpp.o:
+	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/11510225.cpp.o
+.PHONY : 11510225.cpp.o
 
-fs.i: fs.cpp.i
+11510225.i: 11510225.cpp.i
 
-.PHONY : fs.i
+.PHONY : 11510225.i
 
 # target to preprocess a source file
-fs.cpp.i:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/fs.cpp.i
-.PHONY : fs.cpp.i
+11510225.cpp.i:
+	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/11510225.cpp.i
+.PHONY : 11510225.cpp.i
 
-fs.s: fs.cpp.s
+11510225.s: 11510225.cpp.s
 
-.PHONY : fs.s
+.PHONY : 11510225.s
 
 # target to generate assembly for a file
-fs.cpp.s:
-	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/fs.cpp.s
-.PHONY : fs.cpp.s
+11510225.cpp.s:
+	$(MAKE) -f CMakeFiles/lab11.dir/build.make CMakeFiles/lab11.dir/11510225.cpp.s
+.PHONY : 11510225.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... lab11"
-	@echo "... fs.o"
-	@echo "... fs.i"
-	@echo "... fs.s"
+	@echo "... 11510225.o"
+	@echo "... 11510225.i"
+	@echo "... 11510225.s"
 .PHONY : help
 
 

@@ -21,12 +21,14 @@ typedef struct file {
     bool is_open;
     string context;
     int pointer;
+    string filepath;
 } file;
 //Directory structure, including subdirectories, files and name of current directory.
 typedef struct dir {
     vector<dir *> dirs;
     vector<file *> files;
     string dirname;
+    string dirpath;
 } dir;
 //A opened file structure, except for a pointer that point to file, also added the opener and path of opened file.
 typedef struct opfile {
@@ -49,20 +51,24 @@ dir *op_dir = root_dir;
 oplist *open_list = new oplist();
 userlist *user_list = new userlist();
 user *curr_user;
+
 //Initialize the root user and add it into current user.
 void prepare_user() {
+    root_dir->dirpath = "/";
     user *root_user = new user();
     root_user->username = "root";
     root_user->password = "111";
     user_list->users.push_back(root_user);
     curr_user = root_user;
 }
+
 //This operation is set before every input.
 void prepare_stat() {
     cout << curr_user->username << "$" << curr_path << "%:";
     error = false;
     op_dir = curr_dir;
 }
+
 //Using for set the operation path for each command that including a path
 void div_path(string target_path) {
     stringstream input(target_path);
@@ -95,6 +101,7 @@ void div_path(string target_path) {
     }
     path.clear();
 }
+
 //This method is used to check whether there's already a targit in it.
 void check_tar_dup(string tar_name, bool isFile) {
     if (isFile) {
@@ -115,6 +122,7 @@ void check_tar_dup(string tar_name, bool isFile) {
         }
     }
 }
+
 //This method is used to check whether there's a target in it.
 void check_tar_exist(string tar_name, bool isFile) {
     error = true;
@@ -140,6 +148,7 @@ void check_tar_exist(string tar_name, bool isFile) {
         }
     }
 }
+
 //Mannal method, print the manual.
 void man() {
     cout << "Manual:" << endl;
@@ -152,7 +161,7 @@ void man() {
     cout << "6) delete(p) (path) file_name" << endl;
     cout << "7) write(p) (path) file_name buff wmode" << endl;
     cout << "8) reposition(p) (path) file_name pos" << endl;
-    cout << "9) truncate (p) (path) file_name cnt" << endl;
+    cout << "9) truncate(p) (path) file_name cnt" << endl;
     cout << "10) ls(p) (path)" << endl;
     cout << "11) open(p) (path) file_name" << endl;
     cout << "12) close(p) (path) file_name" << endl;
@@ -165,10 +174,12 @@ void man() {
     cout << "19) cd(p) (path) dir_name" << endl;
     cout << "20) exit" << endl;
 }
+
 //Print working directory method, print current path.
 void pwd() {
     cout << curr_path << endl;
 };
+
 //List method, print all the directories and files out.
 void ls() {
     for (auto dir1 : op_dir->dirs) {
@@ -178,6 +189,7 @@ void ls() {
         cout << file1->filename << endl;
     }
 };
+
 //List method with a path, first redirect the path then print the files out.
 void lsp() {
     string target_path;
@@ -187,6 +199,7 @@ void lsp() {
         ls();
     }
 };
+
 //Make directory method, used for initializing a new directory.
 void mkdir() {
     string dir_name;
@@ -195,9 +208,11 @@ void mkdir() {
     if (!error) {
         dir *tmp = new dir;
         tmp->dirname = dir_name;
+        tmp->dirpath = op_dir->dirpath + op_dir->dirname + "/";
         op_dir->dirs.push_back(tmp);
     }
 };
+
 //Make directory method with a path, first redirect the path and then initialize a directory.
 void mkdirp() {
     string target_path;
@@ -207,6 +222,7 @@ void mkdirp() {
         mkdir();
     }
 };
+
 //Change directory method, used for changing current directory.
 void cd() {
     string dir_name;
@@ -222,6 +238,7 @@ void cd() {
         }
     }
 };
+
 //Change directory method with a path, first redirect the path and then without change the directory.
 void cdp() {
     string target_path;
@@ -232,14 +249,26 @@ void cdp() {
         curr_path = target_path;
     }
 };
+
 //Delete directory method, used for deleting directories.
 void dedir() {
     string dir_name;
     cin >> dir_name;
     check_tar_exist(dir_name, false);
     if (!error) {
+
         for (int i = 0; i < op_dir->dirs.size(); ++i) {
             if (op_dir->dirs[i]->dirname == dir_name) {
+                string curr_dir_path = op_dir->dirpath+dir_name+"/";
+                for (int i = 0; i < open_list->opfiles.size(); ++i) {
+                    string first_compare = open_list->opfiles[i]->opf_path;
+                    if (first_compare.length()>curr_dir_path.length())
+                        first_compare.substr(0,curr_dir_path.length());
+                    if (first_compare == curr_dir_path) {
+                        delete (open_list->opfiles[i]);
+                        open_list->opfiles.erase(open_list->opfiles.begin() + i);
+                    }
+                }
                 delete (op_dir->dirs[i]);
                 op_dir->dirs.erase(op_dir->dirs.begin() + i);
                 break;
@@ -247,6 +276,7 @@ void dedir() {
         }
     }
 };
+
 //Delete directory method with a path, first redirect the path and then delete the directory.
 void dedirp() {
     string target_path;
@@ -256,6 +286,7 @@ void dedirp() {
         dedir();
     }
 };
+
 //Create method, used for create file on current path.
 void create() {
     string fname;
@@ -268,9 +299,11 @@ void create() {
         tmp->filename = fname;
         tmp->omode = fmode;
         tmp->creator = curr_user->username;
+        tmp->filepath = op_dir->dirpath + op_dir->dirname + "/";
         op_dir->files.push_back(tmp);
     }
 };
+
 //Create methode with a path, first redirect to the operation path then delete.
 void createp() {
     string target_path;
@@ -280,6 +313,7 @@ void createp() {
         create();
     }
 };
+
 //Search method, used for searching file using depth first search.
 void search(string spath, string sname) {
     error = true;
@@ -297,6 +331,7 @@ void search(string spath, string sname) {
     }
 
 };
+
 //Open method, used for oping file which located on current path.
 void open(string opath) {
     string ofname;
@@ -320,6 +355,7 @@ void open(string opath) {
         }
     }
 };
+
 //Open file method with a path, which allow us to open the file in that path.
 void openp() {
     string target_path;
@@ -329,6 +365,7 @@ void openp() {
         open(target_path);
     }
 };
+
 //Display all the file, go through the open file list and print out the info that required.
 void lsfile() {
     for (auto file1 : open_list->opfiles) {
@@ -337,6 +374,7 @@ void lsfile() {
              << " " << file1->opf_file->omode << endl;
     }
 };
+
 //Write method, first check existance, then check permission, serveral types are there for user to choose.
 void write() {
     string wfname, wcontent;
@@ -376,6 +414,7 @@ void write() {
         }
     }
 }
+
 //Write the file that is in target path. Check the existance then go write() function.
 void writep() {
     string target_path;
@@ -385,6 +424,7 @@ void writep() {
         write();
     }
 };
+
 //Reposition the pointer of the file, check existance and then change the pointer.
 void reposition() {
     string rfile;
@@ -405,6 +445,7 @@ void reposition() {
         }
     }
 }
+
 //Reposition the pointer that in specific path.
 void repositionp() {
     string target_path;
@@ -414,6 +455,7 @@ void repositionp() {
         reposition();
     }
 };
+
 //Display the content of the file, check existance, permission, and then print the content of the file.
 void cat() {
     string cfile;
@@ -437,6 +479,7 @@ void cat() {
         }
     }
 };
+
 //Concatenate method, with a redirect path.
 void catp() {
     string target_path;
@@ -446,6 +489,7 @@ void catp() {
         cat();
     }
 };
+
 //Truncate method, used to truncate the content of the file.
 void truncate() {
     string tfile;
@@ -462,6 +506,7 @@ void truncate() {
         }
     }
 };
+
 //Truncataed method with a path to redirect.
 void truncatep() {
     string target_path;
@@ -471,6 +516,7 @@ void truncatep() {
         truncate();
     }
 };
+
 //Change mode function, used to change the permission of a target.
 void chmod() {
     string cmfile;
@@ -486,6 +532,7 @@ void chmod() {
         }
     }
 };
+
 //Change mode function with a target path.
 void chmodp() {
     string target_path;
@@ -495,7 +542,8 @@ void chmodp() {
         chmod();
     }
 };
-//Close function, check the existance, whether that file is open, and finally the permission.
+
+//Close function, check the existence, whether that file is open, and finally the permission.
 void close(string clpath) {
     string clfile;
     cin >> clfile;
@@ -515,6 +563,7 @@ void close(string clpath) {
         cout << "file does not open" << endl;
     }
 };
+
 //Close function with a path inside of it.
 void closep() {
     string target_path;
@@ -524,7 +573,8 @@ void closep() {
         close(target_path);
     }
 };
-//Delete the file, needs to check the existance, and if that file is open, close it to continue.
+
+//Delete the file, needs to check the existence, and if that file is open, close it to continue.
 void deletei(string dpath) {
     string file_name;
     cin >> file_name;
@@ -544,6 +594,7 @@ void deletei(string dpath) {
         }
     }
 };
+
 //Close file with a path inside of it.
 void deletep() {
     string target_path;
@@ -553,6 +604,7 @@ void deletep() {
         deletei(target_path);
     }
 };
+
 //Register new user, needs to input password and username. Duplication is not allowed.
 void regusr() {
     string rusername, rpassword;
@@ -569,6 +621,7 @@ void regusr() {
     user_list->users.push_back(tmp);
     cout << "register ok" << endl;
 };
+
 //Delete user method, only the root user is able to do this.
 void delusr() {
     string dusername;
@@ -590,6 +643,7 @@ void delusr() {
         cout << "user does not exist" << endl;
     }
 };
+
 //Display the user, also only permitted under the root account.
 void disusr() {
     if (curr_user->username != "root") {
@@ -600,6 +654,7 @@ void disusr() {
         cout << user1->username << endl;
     }
 };
+
 //Login method, used to change users from different people.
 void login() {
     string lusername, lpassword;
@@ -629,6 +684,7 @@ void login() {
         }
     }
 };
+
 //Main function, first prepare the root user, then between every inputs, inplement prepare_stat() method.
 int main() {
     prepare_user();
