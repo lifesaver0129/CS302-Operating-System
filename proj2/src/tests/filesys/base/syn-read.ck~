@@ -1,0 +1,33 @@
+# -*- perl -*-
+use strict;
+use warnings;
+use tests::tests;
+check_expected (IGNORE_EXIT_CODES => 1, [<<'EOF']);
+(syn-read-max) begin
+(syn-read-max) create "data"
+(syn-read-max) open "data"
+(syn-read-max) write "data"
+(syn-read-max) close "data"
+(syn-read-max) exec child 1 of 10: "child-syn-max 0"
+(syn-read-max) exec child 2 of 10: "child-syn-max 1"
+(syn-read-max) exec child 3 of 10: "child-syn-max 2"
+(syn-read-max) exec child 4 of 10: "child-syn-max 3"
+(syn-read-max) exec child 5 of 10: "child-syn-max 4"
+(syn-read-max) exec child 6 of 10: "child-syn-max 5"
+(syn-read-max) exec child 7 of 10: "child-syn-max 6"
+(syn-read-max) exec child 8 of 10: "child-syn-max 7"
+(syn-read-max) exec child 9 of 10: "child-syn-max 8"
+(syn-read-max) exec child 10 of 10: "child-syn-max 9"
+(syn-read-max) wait for child 1 of 10 returned 0 (expected 0)
+(syn-read-max) wait for child 2 of 10 returned 1 (expected 1)
+(syn-read-max) wait for child 3 of 10 returned 2 (expected 2)
+(syn-read-max) wait for child 4 of 10 returned 3 (expected 3)
+(syn-read-max) wait for child 5 of 10 returned 4 (expected 4)
+(syn-read-max) wait for child 6 of 10 returned 5 (expected 5)
+(syn-read-max) wait for child 7 of 10 returned 6 (expected 6)
+(syn-read-max) wait for child 8 of 10 returned 7 (expected 7)
+(syn-read-max) wait for child 9 of 10 returned 8 (expected 8)
+(syn-read-max) wait for child 10 of 10 returned 9 (expected 9)
+(syn-read-max) end
+EOF
+pass;

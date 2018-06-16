@@ -1,0 +1,9 @@
+#ifndef TESTS_FILESYS_BASE_SYN_WRITE_MAX_H
+#define TESTS_FILESYS_BASE_SYN_WRITE_MAX_H
+
+#define CHILD_CNT 25
+#define CHUNK_SIZE 50
+#define BUF_SIZE (CHILD_CNT * CHUNK_SIZE)
+static const char file_name[] = "stuff";
+
+#endif /* tests/filesys/base/syn-write-max.h */
