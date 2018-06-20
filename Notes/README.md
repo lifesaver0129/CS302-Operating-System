@@ -1,8 +1,8 @@
-# OS FInal Review
+# OS Final Review
 
 ## What is an os
 
- Special layer of software that provides application software access to hardware resources 
+Special layer of software that provides application software access to hardware resources 
 
 * Convenient abstraction of complex hardware devices 
 * Protected access to shared sources  
@@ -133,7 +133,7 @@ Except the first process “init”, every process is created using fork().
 * On a 32-bit system, the maximum amount of memory in a process is 2^32 bytes = 4GB. A 64-bit system? = 16EB 
 * Kernel switch between processes
   * Same saving/restoring of registers as before  
-  * Save/restore PSL 
+  * Save/restore PSL
 
 ### System call
 
@@ -262,11 +262,12 @@ Except the first process “init”, every process is created using fork().
 * Page Table Entry (PTE)
   - Pointer to next-level page table or to actual page
   - Permission bits: valid, read-only, read-write, write-only 
-* Hardware Tree Traversal
-  * Generates a “Page Fault” if it encounters invalid PTE
-  * Relatively fast, but inflexible
-* Software
-  * Very flexible, but every translation must invoke fault
+* Inside MMU
+  * Hardware Tree Traversal
+    * Generates a “Page Fault” if it encounters invalid PTE
+    * Relatively fast, but inflexible
+  * Software
+    * Very flexible, but every translation must invoke fault
 
 ### Caching Concept
 
@@ -277,7 +278,7 @@ Except the first process “init”, every process is created using fork().
 * Locality
   * Temporal Locality: keep recently accessed data items closer to processor 
   * Spatial Locality: Move contiguous blocks to the upper levels 
-* Memory Hierarchy: register, onchip cache, Second level cache(SRAM), Main memory(DRAM), Secondary Storage(disk)
+* Memory Hierarchy: register, onchip cache, Second level cache (SRAM), Main memory (DRAM), Secondary Storage (disk)
 * Sources of Cache Misses
   * Compulsory: first access a block
   * Capacity
@@ -334,7 +335,7 @@ e.g. Block 12 placed in 8 block cache
 
 ### Mechanisms
 
-* Valid: Pageinmemory, PTE points at physical page 
+* Valid: Page in memory, PTE points at physical page 
 * Not Valid: Page not in memory; use info in PTE to find it on disk when necessary 
 * Where does OS get a free frame ?
   * Keeps a free list
@@ -401,7 +402,7 @@ e.g. Block 12 placed in 8 block cache
 
 ![](img/10.png)
 
-### Standard Interfaces 
+### Access pattern (Interfaces) 
 
 * Block Devices (disk drives, tape drives, DVD-ROM)
   * Access blocks of data
@@ -415,7 +416,7 @@ e.g. Block 12 placed in 8 block cache
 * Network Devices: e.g. Ethernet, Wireless, Bluetooth
   * Different enough from block/character to have own interface 
 
-### User Deal with Timing
+### Access timing
 
 * Blocking Interface: “Wait” 
   * When request / write data (e.g. read() system call), put process to sleep until data / device is ready
@@ -447,3 +448,294 @@ e.g. Block 12 placed in 8 block cache
   * OS periodically checks a device-specific status register  I/O device puts completion information in status register 
   * Pro: low overhead 
   * Con: may waste many cycles on polling if infrequent or unpredictable I/O operations
+
+![](img/12.png)
+
+### I/O Performance Concepts 
+
+* Response Time or Latency: Time to perform an operation(s) 
+* Bandwidth or Throughput: Rate at which operations are performed (op/s) 
+  * Files: MB/s, Networks: Mb/s, Arithmetic: GFLOP/s
+* Start up or “Overhead”: time to initiate an operation
+* Transfer capacity B, startup cost(Overhead) S, n bytes 
+  * Latency(n) = S + n/B
+  * Bandwidth = n/(S + n/B) = B * n/( B * S + n) = B/(B * S/n + 1) 
+  * half-power point occurs at n=S * B 
+* Magnetic disks: slow performance for random access, better performance for sequential access
+* Flash memory: good performance for reads; worse for random writes
+* Costs
+  - Syscall overhead
+  - Operating system processing 
+  - Controller Overhead 
+  - Device Startup 
+  - Queuing
+
+### Magnetic Disk 
+
+* Sector: unit of transfer, ring of sectors form a track, stack of tracks form a cylinder, heads position on cylinders 
+* Cylinders: all the tracks under the head at a given point on all surface
+* Vectors [cylinder, surface, sector] 
+* Disk Latency = Queueing Time + Controller time + Seek Time + Rotation Time + Transfer Time 
+  * Seek time: position the head/arm over the proper track
+  * Rotational latency: wait for desired sector to rotate under r/w head
+    * Contributing factors: software paths, hardware controller, I/O device service time 
+  * Transfer time: transfer a block of bits (sector) under r/w head
+
+## Storage, Performance 
+
+### SSD summary
+
+* Pros (vs. hard disk drives): 
+  * Low latency, high throughput (eliminate seek/rotational delay)
+  * No moving parts: very light weight, low power, silent, very shock insensitive 
+  * Read at memory speeds (limited by controller and I/O)
+* Cons
+  * Small storage, expensive 
+  * Asymmetric block write performance: read pg/erase/write pg
+  * Limited drive lifetime
+
+### I/O service time
+
+![](img/13.png)
+
+* Service rate (μ = 1/Ts) - operations per sec  
+* Arrival rate: (λ = 1/Ta) - requests per second
+* Utilization: U = λ/μ , where λ < μ
+
+### Little’s Law 
+
+* Stable system: Average arrival rate = Average departure rate 
+* The average number of jobs/tasks in the system (N) is equal to arrival time / throughput (λ) times the response time (L) 
+  * N(jobs)=λ(jobs/s) x L(s)
+* Average occupancy (Navg) = S/T = (L(1) + ... + L(k))/T  =  (Ntotal/T) *(L(1) + ... + L(k)) / Ntotal = λavg × Lavg 
+* Avg response time for disk request = Tsys = Tq + Tser = Tser*(u/1-u + 1)
+
+### Disk Scheduling
+
+* FIFO Order
+* SSTF: Shortest seek time first 
+  * Pick the request that’s closest on the disk 
+  * Con: may lead to starvation
+* SCAN: take the closest request in the direction of travel
+* C-SCAN: Circular-Scan: only goes in one direction
+
+## File system
+
+### Concepts
+
+* File system: layer of OS that transforms block interface of disks (or other block devices) into files and directories, is a way that lays out how data is organized on a storage device
+* Transforms blocks into Files and Directories  
+* Optimize for access and usage patterns
+* Maximize sequential access, allow efficient random access 
+* Components: naming, disk management, protection, reliability / durability
+* Different views
+  * User: Durable Data Structures 
+  * System (system call interface): Collection of Bytes 
+  * System (inside OS): Collection of blocks (logical transfer unit)
+* Reads bytes
+  * Fetch block corresponding to those bytes
+  * Return just the correct portion of the block
+* Write bytes
+  * Fetch block 
+  * Modify portion
+  * Write out Block 
+* Everything inside File System is in whole size blocks
+
+### Disk Management Policies
+
+* File: user-visible group of blocks arranged sequentially in 
+
+  logical space 
+
+* Directory: user-visible index mapping names to files
+
+* Access disk as linear array of sectors
+
+  * Logical Block Addressing (LBA): Every sector has integer address from zero up to max number of sectors 
+  * Controller translates from address -> physical position 
+    * First case: OS/BIOS must deal with bad sectors
+    * Second case: hardware shields OS from structure of disk 
+
+* File Header: optimize placement of files’ disk blocks to match access and usage patterns
+
+### Contiguous allocation 
+
+* Root directory: store filename, starting address and size, and all the attributes
+* File locate is easy
+* File deletion is easy
+* File creation is bad: external fragmentation
+  * Must defragmentation  
+
+### Linked allocation 
+
+![](img/16.png)
+
+* Steps
+  * Chop the storage device into equal-sized blocks
+  * Fill the empty space in a block-by-block manner
+* Leave 4 bytes from each block as the "pointer", to the next block or -1
+* Internal Fragmentation: last block of a file may not be fully filled
+* Poor random access performance
+
+### File Allocation Table (FAT)
+
+* Centralize all the block links, linked list with blocks
+* Read file steps
+  * Read the root directory and retrieve the first block number
+  * Read the FAT to determine the location of next block (may not be contiguously allocated)
+  * Stops until the FAT says the next block # is -1
+* FAT 12: 12bits cluster address length; FAT 16: 16bits; FAT 32: 28bits (reserve 4)
+* File system size = block size * block address
+
+### FAT series 
+
+#### Layout overview
+
+* Boot sector: FS-specific parameters
+* FSINFO: free-space management 
+* FAT: 2 pieces, 1 copy as backup 
+* Root directory: start of the directory tree
+
+#### Directory entry 
+
+* Big endian: Significant (big) byte goes first 
+* Little endian: Insignificant (little) byte goes first
+* Largest file: 4G - 1 bytes
+
+![](img/14.png)
+
+#### LFN directory entry 
+
+![](img/15.png)
+
+#### Reading file
+
+1. Read the content from Cluster #32. Note. The file size may also help determining if the last cluster is reached. 
+2. Look for the next cluster and it is Cluster #33.
+3. Since the FAT has marked “EOF”, we have reached the last cluster of that file. 
+
+#### Writing file
+
+1. Locate the last cluster.  
+2. Start writing to the non-full cluster
+3. Allocate the next cluster through FSINFO 
+4. Update the FATs and FSINFO 
+5. When write finishes, update the file size
+
+#### Delete file
+
+1. De-allocate all the blocks involved. Update FSINFO and FATs
+2. Change the first byte of the directory entry to _ (0xE5) 
+
+### Design file system
+
+* Durable data store 
+* Disks Performance 
+* Open before Read/Write  
+* Size is determined as they are used  
+* Organized into directories
+* Need to allocate / free blocks
+
+#### Components 
+
+* File path -> directory structure -> file number (inumber) -> file index structure (inode) -> data blocks
+
+* File name offset -> (directory offset) -> file number -> (index structure) -> storage block 
+
+* Open performs Name Resolution 
+  * Translates pathname into a “file number”
+  * Creates a file descriptor in PCB within kernel
+  * Returns a “handle” (another integer) to user process
+* Directory
+  * hierarchical structure 
+  * each has a name and attributes
+  * Links (hard links) make it a DAG
+* File
+  * Data
+  * Metadata (Attributes)
+  * Owner, size, last opened
+  * Access rights
+    * R, W, X
+    * Owner, Group, Other
+
+#### FAT Properties 
+
+* File is collection of disk blocks
+* File Number is index of root of block list for the file 
+* Grow file by allocating free blocks and linking them in 
+* FAT stored on disk, on boot cache in memory, second backup on disk
+* Format the disk: zero the block, link up the FAT free list
+* File attributes are kept in directory
+* resolve "/my/book/count"
+  * Read in file header for root (fixed spot on disk)
+  * Read in first data block for root
+  * Read in file header for “my”
+  * Read in first data block for “my”; search for “book”
+  * Read in file header for “book”
+  * Read in first data block for “book”; search for “count”
+  * Read in file header for “count” 
+* Security holes
+  * FAT has no access rights 
+  * FAT has no header in the file blocks 
+
+### iNode allocation
+
+* All pointers of a file are located together
+* One directory/file has one Inode
+* Pointers are unbalanced tree-based 
+* File megadata: 9 basic access control bits: UGO x RWX
+* Direct pointers: 4kB blocks -> sufficient for files up to 48KB
+* Indirect pointers 
+  * point to a disk block 
+  * containing only pointers - 4 kB blocks => 1024 ptrs => 4 MB @ level 2 => 4 GB @ level 3 => 4 TB @ level 4
+* Max file size != FS size
+
+![](img/17.png)
+
+### Ext2/3
+
+* Block size: 1,024, 2,048, or 4,096 bytes
+* The file system is divided into block groups and every block group has the same structure 
+
+#### Disk layout
+
+![](img/18.png)
+
+* Number of files in the file system is fixed
+* Pros
+  * Performance: spatial locality.  
+  * Reliability: superblock and GDT are replicated in each block group 
+
+#### Directory
+
+* Directory entry in directory block
+  * 0-3 Inode number of that file/directory 
+  * 4-5 Length of this entry 
+  * 6-6 Length of the filename 
+  * 7-7 File Type 
+  * 8+ Name in ASCII (max 255 character) 
+
+#### Link file
+
+* Hard link
+  * A directory entry pointing to the inode of an existing file
+  * File can accessed through two different pathnames
+  * Root directory: “.” and “..” pointing to itself
+  * Remove the original still accessible through
+* Symbolic link
+  * Creates a new inode
+  * Target’s pathname are stored using the space originally designed for 12 direct block and the 3 indirect block pointers
+  * Remove the original, pathname can not access
+
+### NTFS
+
+* Variable length extents
+* Everything (almost) is a sequence of \<attribute:value\> pairs
+* Mix direct and indirect freely
+* Directories organized in B-tree structure by default
+* Master File Table
+  * Database with Flexible 1KB entries for metadata/data 
+  * Variable-sized attribute records (data or metadata)
+  * Extend with variable depth tree (non-resident) 
+* Extents – variable length contiguous regions
+* Journaling for reliability
