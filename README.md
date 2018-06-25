@@ -1,6 +1,26 @@
 # CS302-Operating-System
 
-## Final Exam Outline
+## Labs
+
+* Lab00: C programming
+* Lab01: Basic bash command
+* Lab02: Process, pipe and signals
+* Lab03: Schedule
+* Lab04: Synchronization
+* Lab05: Synchronization Cont.
+* Lab06: Memory managment
+* Lab07: System call and Caching
+* Lab08: Caching
+* Lab09: Disk scheduling
+* Lab10: File system
+* Lab11: File system Cont.
+
+## Projects
+
+* Project 1: Threads
+* Project 2: User program
+
+## Final exam
 
 ### Part I: True or False (12 marks)
 
